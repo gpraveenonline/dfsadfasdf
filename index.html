@@ -5,20 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>MSAL JS</title>
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/bluebird/3.3.4/bluebird.min.js" class="pre"></script>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/bluebird/3.3.4/bluebird.min.js" class="pre"></script>
     <script src="https://alcdn.msauth.net/lib/1.2.0/js/msal.min.js"></script>
-    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.4.1.min.js"></script> -->
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.4.1.min.js"></script> 
 </head>
 
 <body>
 
-    <!-- <script>
+    <script>
         'use strict';
         $(document).ready(function (e) {
           $("#url").text(window.location.href);
           //avoid multiple times to fetch token. Which might lead to auto signout due to multiple times requested.
           //store the token in local storage and  
-          if(localStorage["accesstoken"]==null || localStorage["accesstoken"]==""){
+         // if(localStorage["accesstoken"]==null || localStorage["accesstoken"]==""){
             const msal = new Msal.UserAgentApplication({
                 auth: {
                    clientId: "b2f0d59c-e794-4bcc-87bf-ab9cec4fc6b9",
@@ -28,7 +28,7 @@
             });
             const loginRequest = {
                 scopes: ["openid"],
-                loginHint:'praveenkumar.g@inatech.com'
+                loginHint:'praveenkumar@company.com'
               };
 
             msal.handleRedirectCallback(function (error, response) {
@@ -45,22 +45,7 @@
             }
 
             
-            msal.acquireTokenPopup(loginRequest)
-                    .then((response) => {
-                      if (response.accessToken) {
-                          $("#accessToken").text(response.accessToken);
-                          //store the token when received
-                          localStorage["accesstoken"]=response.accessToken;
-                      }
-                    })
-                    .catch(error => {
-                        console.log("error getting token");
-                    });
-
-
-            // setTimeout(function () {
-            //   //use this function for refresh for a new token
-            //         msal.acquireTokenSilent(loginRequest)
+            // msal.acquireTokenPopup(loginRequest)
             //         .then((response) => {
             //           if (response.accessToken) {
             //               $("#accessToken").text(response.accessToken);
@@ -69,16 +54,33 @@
             //           }
             //         })
             //         .catch(error => {
-            //             console.log("silent token acquisition fails. acquiring token using redirect");
+            //             console.log("error getting token");
             //         });
-            // }, 5000);
-          }
-          else{
-            $("#accessToken").text(localStorage["accesstoken"]);
-          }
+
+
+            setTimeout(function () {
+              //use this function for refresh for a new token
+                    msal.acquireTokenSilent(loginRequest)
+                    .then((response) => {
+                      if (response.accessToken) {
+                          //$("#accessToken").text(response.accessToken);
+                          //store the token when received
+                          localStorage["accesstoken"]=response.accessToken;
+                      }
+                    })
+                    .catch(error => {
+                        console.log("silent token acquisition fails. acquiring token using redirect");
+                    });
+            }, 5000);
+
+
+          // }
+          // else{
+          //   $("#accessToken").text(localStorage["accesstoken"]);
+          // }
           });
-    </script> -->
-<span id="url">fetching token..</span>
+    </script>
+<!-- <span id="url">fetching token..</span>
 <span id="accessToken">fetching token..</span>
 
 <table border="0" cellpadding="0" cellspacing="0">
@@ -112,7 +114,7 @@ var timer = setInterval(function() {
       popup = window.open("popup.html", "asd", "width=300,height=100");
       popup.focus();
   }
-</script>
+</script> -->
 
 </body>
 
